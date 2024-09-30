@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>ECharts</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.5.0/axios.js"></script>
+</head>
+
+<body>
+  <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+  <div id="main" style="width: 600px;height:400px;"></div>
+  <script type="text/javascript">
+    async function init() {
+      const res = await axios.get('/salary')
+      console.log(res)
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('main'));
+
+      // 指定图表的配置项和数据
+      var option = {
+        title: {
+          text: '各城市就业薪资分布'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {},
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+          type: 'category',
+          data: res.data.map(item => item.city)
+        },
+        series: [
+          {
+            name: '10K 以下',
+            type: 'bar',
+            data: res.data.map(item => item.low)
+          },
+          {
+            name: '10K ~ 20K',
+            type: 'bar',
+            data: res.data.map(item => item.mid)
+          },
+          {
+            name: '20K以上',
+            type: 'bar',
+            data: res.data.map(item => item.high)
+          }
+        ]
+      };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    }
+    init()
+  </script>
+</body>
+
+</html>

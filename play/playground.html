@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<style></style>
+
+<body>
+  <div class="LfQKSUd6 videoImage" style="padding-top: 75%">
+    <div class="P_fYT9Yl">
+      <div class="VCzQd6LR gKdV8UVo AOWn0q0h">
+        <img
+          src="//p3-pc-sign.douyinpic.com/image-cut-tos-priv/52f748d1a7ccb7ba7ebd5ac4c6528e49~tplv-dy-resize-origshort-autoq-75:330.jpeg?biz_tag=pcweb_cover&amp;from=3213915784&amp;s=PackSourceEnum_DOUYIN_WEB_NEW_PAGE&amp;sc=cover&amp;se=false&amp;x-expires=2031721200&amp;x-signature=pv%2FopixWUeNgsODQEGL3NViMClY%3D"
+          alt="顶级狠人白毛！只因左手被废，直接黑化大闹整个台湾黑帮！" class="efV2zCXp" fetchpriority="high" width="251" height="287"
+          decoding="async" />
+      </div>
+      <div class="UX060dgp">
+        <div class="nuzreXyV"></div>
+        <div class="SUqMCu8j">
+          <div class="xd89zr3i"></div>
+          <div class="A1U0rNzF"></div>
+          <div class="S_Igcwe1">06:02</div>
+          <div class="ZDiepo_2">
+            <span>300</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="YW2FZ8iD">
+      <div class="_286xHt5">
+        <div class="MR80_HYg">顶级狠人白毛！只因左手被废，直接黑化大闹整个台湾黑帮！</div>
+        <div class="f2Ynfaty"><span class="hEmWElZr"><span class="QF_KhS8l">@</span><span
+              class="u6iv2BZe">电影孙默群</span></span><span class="iME2aRIb yqgtGZur"> · 3月25日</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="LfQKSUd6 videoImage" style="padding-top: 75%">
+    <div class="P_fYT9Yl">
+      <div class="VCzQd6LR gKdV8UVo AOWn0q0h">
+        <img
+          src="//p3-pc-sign.douyinpic.com/image-cut-tos-priv/52f748d1a7ccb7ba7ebd5ac4c6528e49~tplv-dy-resize-origshort-autoq-75:330.jpeg?biz_tag=pcweb_cover&amp;from=3213915784&amp;s=PackSourceEnum_DOUYIN_WEB_NEW_PAGE&amp;sc=cover&amp;se=false&amp;x-expires=2031721200&amp;x-signature=pv%2FopixWUeNgsODQEGL3NViMClY%3D"
+          alt="顶级狠人白毛！只因左手被废，直接黑化大闹整个台湾黑帮！" class="efV2zCXp" fetchpriority="high" width="251" height="287"
+          decoding="async" />
+      </div>
+      <div class="UX060dgp">
+        <div class="nuzreXyV"></div>
+        <div class="SUqMCu8j">
+          <div class="xd89zr3i"></div>
+          <div class="A1U0rNzF"></div>
+          <div class="S_Igcwe1">06:02</div>
+          <div class="ZDiepo_2">
+            <span>1.1万</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="YW2FZ8iD">
+      <div class="_286xHt5">
+        <div class="MR80_HYg">顶级狠人白毛！只因左手被废，直接黑化大闹整个台湾黑帮！</div>
+        <div class="f2Ynfaty"><span class="hEmWElZr"><span class="QF_KhS8l">@</span><span
+              class="u6iv2BZe">电影孙默群</span></span><span class="iME2aRIb yqgtGZur"> · 3月25日</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  
+    // 示例使用
+    const arr = [
+      { id: 1, pid: 0, title: "首页" },
+      { id: 2, pid: 1, title: "订单列表" },
+      { id: 3, pid: 1, title: "刊登管理" },
+      { id: 4, pid: 3, title: "刊登列表" },
+      { id: 5, pid: 3, title: "刊登设置" },
+      { id: 6, pid: 0, title: "登陆" },
+    ];
+
+    const list = [
+      {
+        id: 1,
+        pid: 0,
+        title: "首页",
+        children: [
+          {
+            id: 2,
+            pid: 1,
+            title: "订单列表",
+            children: [],
+          },
+          {
+            id: 3,
+            pid: 1,
+            title: "刊登管理",
+            children: [
+              {
+                id: 4,
+                pid: 3,
+                title: "刊登列表",
+                children: [],
+              },
+              {
+                id: 5,
+                pid: 3,
+                title: "刊登设置",
+                children: [],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 6,
+        pid: 0,
+        title: "登陆",
+        children: [],
+      },
+    ];
+    function tree2array(arr) {
+      return arr.reduce((prev, cur) => {
+        if (cur.children.length > 0) {
+          const sub = tree2array(cur.children);
+          delete cur.children;
+          prev.push(cur, ...sub);
+        } else {
+          prev.push(cur);
+        }
+        return prev;
+      }, []);
+    }
+    //    console.log(tree2array(list))
+    // function array2tree(arr, pid = 0) {
+    //     return arr.reduce((prev, cur) => {
+    //         if (pid === cur.pid) {
+    //             const children = array2tree(arr, cur.id)
+    //             if(children.length) cur.children = children
+    //             prev.push(cur)
+    //         }
+    //         return prev
+    //     }, [])
+    // }
+    // function array2Tree(arr) {
+    //     const data = [];
+    //     function _getParent(list, pid) {
+    //         for (let i = 0; i < list.length; i++) {
+    //             if (list[i].id === pid) {
+    //                 return list[i];
+    //             }
+    //             if (list[i].children && list[i].children.length > 0) {
+    //                 const childParent = _getParent(list[i].children, pid);
+    //                 if (childParent) {
+    //                     return childParent;
+    //                 }
+    //             }
+    //         }
+    //         return null;
+    //     }
+    //     arr.forEach(v => {
+    //         v.children = [];
+    //         if (v.pid === 0) {
+    //             data.push(v);
+    //         } else {
+    //             const parent = _getParent(data, v.pid);
+    //             if (parent) {
+    //                 parent.children.push(v);
+    //             }
+    //         }
+    //     });
+    //     return data;
+    // }
+
+    // function getTitles(id) {
+    //     function _getTileArr(list, id = 1, titleArr = []) {
+    //         for (let i = 0; i < list.length; i++) {
+    //             if (list[i].id === id) {
+    //             } else {
+    //                 if (list[i].children.length > 0) {
+    //                     _getTileArr(list[i].children, id, titleArr)
+    //                 }
+    //             }
+    //         }
+    //         return titleArr;
+    //     }
+    //     return _getTileArr(list, id);
+    // }
+    // const result = getTitles(5);
+    // console.log(result)
+  </script>
+</body>
+
+</html>

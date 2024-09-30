@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>JSON to Image</title>
+    <style>
+        body {
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="jsonInput" rows="10" cols="50" placeholder="Enter your JSON here..."></textarea><br />
+    <button onclick="renderToJsonImage()">Render to Image</button><br />
+    <canvas id="jsonCanvas" style="display: none"></canvas>
+
+    <script>
+        function renderToJsonImage() {
+            const input = document.getElementById("jsonInput").value;
+            const canvas = document.getElementById("jsonCanvas");
+            const ctx = canvas.getContext("2d");
+
+            try {
+                const json = JSON.parse(input);
+                const formattedJson = JSON.stringify(json, null, 2);
+                const text = `{\n${formattedJson}\n}`;
+
+                // 设置Canvas大小
+                canvas.width = 800;
+                canvas.height = 300;
+
+                // 清除画布并设置背景颜色
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "white"; // 设置背景颜色为白色
+                ctx.fillRect(0, 0, canvas.width, canvas.height); // 填充背景颜色
+
+                // 设置字体样式
+                ctx.font = "16px monospace";
+                ctx.fillStyle = "black";
+
+                // 分行绘制JSON文本
+                const lines = text.split("\n");
+                let y = 20;
+                lines.forEach((line) => {
+                    ctx.fillText(line, 20, (y += 20));
+                });
+
+                // 将Canvas内容转换为JPG格式的Base64编码
+                const dataURL = canvas.toDataURL("image/jpeg", 0.9);
+                downloadImage(dataURL, "json-image.jpg");
+            } catch (e) {
+                alert("Invalid JSON format!");
+            }
+        }
+
+        function downloadImage(dataURL, filename) {
+            const link = document.createElement("a");
+            link.href = dataURL;
+            link.download = filename;
+            link.click();
+        }
+    </script>
+</body>
+
+</html>

@@ -6,31 +6,466 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
 </head>
 <style>
-  .c1 {
-    width: 100px;
-    height: 100px;
-    /* background-color: #808080; */
-    background-image: linear-gradient(to right, #82321e, rgba(255, 255, 255, 0) 10px);
+  /* .loading-indicator {
+    font-size: 16px;
+    color: #09f;
+
+    span {
+      display: inline-block;
+      overflow: hidden;
+      height: 1em;
+      line-height: 1;
+      vertical-align: -.25em;
+
+      &::after {
+        display: block;
+        white-space: pre-wrap;
+        content: "...\A..\A.";
+        animation: loading 3s infinite step-start both;
+      }
+    }
   }
+
+  @keyframes loading {
+    33% {
+      transform: translate3d(0, -2em, 0);
+    }
+
+    66% {
+      transform: translate3d(0, -1em, 0);
+    }
+  } */
+  .state-ball {
+    overflow: hidden;
+    position: relative;
+    padding: 5px;
+    border: 3px solid #3c9;
+    border-radius: 100%;
+    width: 150px;
+    height: 150px;
+    background-color: #fff;
+
+    &::before,
+    &::after {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      z-index: 20;
+      margin-left: -100px;
+      width: 200px;
+      height: 200px;
+      content: "";
+    }
+
+    &::before {
+      margin-top: -150px;
+      border-radius: 45%;
+      background-color: rgba(#fff, .5);
+      animation: rotate 10s linear -5s infinite;
+    }
+
+    &::after {
+      margin-top: -160px;
+      border-radius: 40%;
+      background-color: rgba(#fff, .8);
+      animation: rotate 15s infinite;
+    }
+
+    &.warning {
+      border-color: #f90;
+
+      .wave {
+        background-image: linear-gradient(-180deg, #f0c78a 13%, #f90 91%);
+      }
+    }
+
+    &.danger {
+      border-color: #f66;
+
+      .wave {
+        background-image: linear-gradient(-180deg, #f78989 13%, #f66 91%);
+      }
+    }
+
+    .wave {
+      position: relative;
+      border-radius: 100%;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(-180deg, #af8 13%, #3c9 91%);
+    }
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  /* 
+  .active {
+    background-color: #3c9;
+    color: #0e0404;
+  }
+
+  .tab-navbar {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column-reverse;
+    border-radius: 10px;
+    width: 300px;
+    height: 400px;
+
+    input {
+      &:nth-child(1):checked {
+        &~nav label:nth-child(1) {}
+
+        &~main ul {
+          background-color: #f66;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      &:nth-child(2):checked {
+        &~nav label:nth-child(2) {}
+
+        &~main ul {
+          background-color: #66f;
+          transform: translate3d(9%, 0, 0);
+        }
+      }
+
+      &:nth-child(3):checked {
+        &~nav label:nth-child(3) {}
+
+        &~main ul {
+          background-color: #f90;
+          transform: translate3d(-50%, 0, 0);
+        }
+      }
+
+      &:nth-child(4):checked {
+        &~nav label:nth-child(4) {}
+
+        &~main ul {
+          background-color: #09f;
+          transform: translate3d(-75%, 0, 0);
+        }
+      }
+    }
+
+    nav {
+      display: flex;
+      height: 40px;
+      background-color: #f0f0f0;
+      line-height: 40px;
+      text-align: center;
+
+      label {
+        flex: 1;
+        cursor: pointer;
+        transition: all 300ms;
+      }
+    }
+
+    main {
+      flex: 1;
+
+      ul {
+        display: flex;
+        flex-wrap: nowrap;
+        width: 400%;
+        height: 100%;
+        transition: all 300ms;
+      }
+
+      li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        font-weight: bold;
+        font-size: 20px;
+        color: #fff;
+      }
+    }
+  } */
+
+
+  /* ul {
+    scroll-snap-type: x mandatory;
+  }
+
+  li {
+    scroll-snap-align: start;
+  } */
 </style>
 
 <body>
-  <div class="c1">
-
+  <!-- <div class="bruce flex-ct-x" data-title="标签导航">
+    <div class="tab-navbar">
+      <input id="tab1" type="radio" name="tabs" hidden checked>
+      <input id="tab2" type="radio" name="tabs" hidden>
+      <input id="tab3" type="radio" name="tabs" hidden>
+      <input id="tab4" type="radio" name="tabs" hidden>
+      <nav>
+        <label for="tab1">标题1</label>
+        <label for="tab2">标题2</label>
+        <label for="tab3">标题3</label>
+        <label for="tab4">标题4</label>
+      </nav>
+      <main>
+        <ul>
+          <li>内容1</li>
+          <li>内容2</li>
+          <li>内容3</li>
+          <li>内容4</li>
+        </ul>
+      </main>
+    </div>
+  </div> -->
+  <div class="bruce flex-ct-x" data-title="状态悬浮球">
+    <div class="state-ball warning">
+      <div class="wave"></div>
+    </div>
   </div>
-
-
 </body>
 
 <script>
-  const arrC = (n) => {
-    console.log(n)
-    return n + 1
+  const root = {
+    val: 'A',
+    left: {
+      val: 'B',
+      left: {
+        val: 'D',
+        left: {
+          val: 'G',
+        },
+        right: {
+          val: 'H',
+        },
+      },
+      right: {
+        val: 'E',
+      },
+    },
+    right: {
+      val: 'C',
+      left: {
+        val: 'F',
+        left: {
+          val: 'I',
+        },
+      },
+    },
+  };
+
+  function levelOrder(root) {
+    if (!root) return [];
+    const res = [];
+    const queue = [root];
+    while (queue.length) {
+      const len = queue.length;
+      const curLevel = [];
+      for (let i = 0; i < len; i++) {
+        const node = queue.shift();
+        curLevel.push(node.val);
+        node.left && queue.push(node.left);
+        node.right && queue.push(node.right);
+      }
+      res.push(curLevel);
+    }
+    return res;
   }
-  const arr = [1, 2, -3]
-  const arr2 = arr.map(arrC)
+  console.log(levelOrder(root))
+
+
+
+  const cb = (b) => {
+    if (b.id == 5) {
+      return true
+    }
+  }
+  const array = [
+    { id: 1, parentId: null },
+    { id: 2, parentId: 1 },
+    { id: 3, parentId: 1 },
+    { id: 4, parentId: 2 },
+    { id: 5, parentId: 3 }
+  ];
+  const tree2 =
+    [
+      {
+        "id": 1,
+        "parentId": null,
+        "children": [
+          {
+            "id": 2,
+            "parentId": 1,
+            "children": [
+              {
+                "id": 4,
+                "parentId": 2
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "parentId": 1,
+            "children": [
+              {
+                "id": 5,
+                "parentId": 3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  function tree2List(tree) {
+    if (!tree || !tree.length) return [];
+    const res = []
+    const queen = [...tree]
+    while (queen.length) {
+      for (let i = 0; i < queen.length; i++) {
+        const node = queen.shift()
+        const children = node.children
+        delete node.children
+        res.push(node)
+        children && queen.push(...children)
+      }
+    }
+    return res
+  }
+
+  // function treeAddLevel(tree) {
+  //   let level = 1
+  //   const queen = [...tree]
+  //   while (queen.length) {
+  //     const len = queen.length
+  //     for (let i = 0; i < len; i++) {
+  //       const node = queen.shift()
+  //       if (node.children) {
+  //         queen.push(...node.children)
+  //       }
+  //       node.level = level
+  //     }
+  //     level++
+  //   }
+  // }
+  function treeAddLevel(tree, level = 1) {
+    // 创建一个队列来保存待处理的节点  
+    const queue = [...tree];
+    const len = queue.length;
+    level++
+    for (let i = 0; i < len; i++) {
+      const node = queue.shift();
+      node.level = level;
+      if (node.children) {
+        treeAddLevel(node.children, level)
+      }
+    }
+  }
+  treeAddLevel(tree2)
+  function treeFindPath(tree, cb, path = []) {
+    if (!tree || !tree.length) return null;
+    if (!cb || typeof cb !== 'function') return null;
+    for (let i = 0; i < tree.length; i++) {
+      const node = tree[i];
+      const newPath = [...path, node.id]; // 创建新的路径数组，避免修改原始 path  
+      if (cb(node)) return newPath; // 找到满足条件的节点，返回新路径  
+      if (node.children) {
+        const result = treeFindPath(node.children, cb, newPath); // 递归调用，传入新路径  
+        if (result) return result; // 如果递归调用返回路径，则返回该路径  
+      }
+    }
+    return null; // 如果没有找到满足条件的节点，返回 null 而不是空数组  
+  }
+  function treeFindPath2(tree, cb, path = [], res = []) {
+    if (!tree || !tree.length) return null;
+    if (!cb || typeof cb !== 'function') return null;
+    for (let i = 0; i < tree.length; i++) {
+      const node = tree[i]
+      console.log()
+      path.push(node.id)
+      cb(node) && res.push([...path])
+      if (node.children) {
+        treeFindPath2(node.children, cb, path, res)
+      }
+      path.pop()
+    }
+    return res
+  }
+
+  // console.log(treeFindPath2(tree2, cb, []))
+  // console.log(tree2List(tree2))
+  const array2tree = (array) => {
+    let map = {}
+    let root = []
+    array.forEach((item) => {
+      map[item.id] = item
+    })
+    array.forEach((node) => {
+      const parent = map[node.parentId];
+      if (parent) {
+        parent.children = parent.children || [];
+        parent.children.push(node);
+      } else {
+        root.push(node)
+      }
+    })
+    return root
+  }
+  const tree = [
+    {
+      value: 'root',
+      children: [
+        {
+          value: 'child1',
+          children: []
+        },
+        {
+          value: 'child2',
+          children: [
+            {
+              value: 'grandchild1',
+              children: []
+            },
+            {
+              value: 'grandchild2',
+              children: []
+            }
+          ]
+        }
+      ]
+    }
+  ];
+  function dfs(tree, cb) {
+    if (!tree) return;
+    for (let i = 0; i < tree.length; i++) {
+      const node = tree[i];
+      cb && cb(node);
+      node.children && dfs(node.children, cb);
+    }
+  }
+  let id = 1;
+  // 接受一个回调函数，来进行访问操作
+  function bfs(tree, cb) {
+    if (!tree) return;
+    const queue = [...tree];
+    while (queue.length) {
+      const node = queue.shift();
+      // 遍历的时候给树增加个 id，方便后面的使用
+      node.id = id++;
+      cb && cb(node);
+      node.children && queue.push(...node.children);
+    }
+  }
+
+  dfs(tree, cb)
 </script>
 
 <!-- <script>

@@ -1,0 +1,219 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+@font-face {
+  font-family: U;
+  src: url("https://raw.githubusercontent.com/SmartWrh/blog/main/01/u.ttf");
+}
+
+@font-face {
+  font-family: U2;
+  src: url("https://raw.githubusercontent.com/SmartWrh/blog/main/01/u2.ttf");
+}
+
+.wrapper {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.placeholder {
+  height: 100vh;
+}
+
+.mask {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: white;
+  display: flex;
+  font-family: U;
+  font-size: 200px;
+  font-weight: 600;
+  background: black;
+  position: absolute;
+  align-items: center;
+  mix-blend-mode: darken;
+  justify-content: center;
+  animation: alpha 3s forwards linear;
+}
+
+.scale-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  animation: scale 3s forwards linear;
+}
+
+.stroke-wrapper {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  font-family: U;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  animation: stroke 3s forwards linear;
+}
+
+.stroke-text {
+  position: relative;
+  color: transparent;
+  font-size: 200px;
+  font-weight: 600;
+  -webkit-text-stroke: 10px white;
+  animation: alpha-stroke 3s forwards linear;
+}
+
+.stroke-mask {
+  position: absolute;
+  color: transparent;
+  font-size: 200px;
+  -webkit-text-stroke: 10px black;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(135deg, #025f98 20%, #062e3a 80%);
+  animation: alpha-stroke-text 3s forwards linear;
+}
+
+.title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: white;
+  font-family: U;
+  font-size: 36px;
+  padding: 0px 2px;
+  font-weight: bold;
+  background: #ee141e;
+  text-shadow: 1px 1px 2px black;
+  transform: translate(-50%, -50%);
+  animation: clip 3s forwards linear;
+}
+
+.sub-title {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  color: white;
+  font-family: U2;
+  font-size: 20px;
+  font-weight: bold;
+  transform: translateX(-50%);
+  animation: alpha-stroke-subTitle 3s forwards linear;
+}
+
+@keyframes clip {
+  0% {
+    opacity: 0;
+    background: black;
+    clip-path: inset(0% 50% 0% 50%);
+  }
+
+  50% {
+    opacity: 0;
+    clip-path: inset(0% 50% 0% 50%);
+  }
+
+  80% {
+    background: black;
+    clip-path: inset(0% 50% 0% 50%);
+  }
+
+  100% {
+    opacity: 1;
+    background: #ee141e;
+    clip-path: inset(0% 0 0% 0);
+  }
+}
+
+@keyframes alpha {
+  0% {
+    opacity: 0;
+    transform: scale(6);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes alpha-stroke {
+  0% {
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes alpha-stroke-text {
+  0% {
+    opacity: 0;
+    transform: translate(0px, 0px);
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  90% {
+    transform: translate(0px, 0px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(9px, 6px);
+  }
+}
+
+@keyframes alpha-stroke-subTitle {
+  0% {
+    bottom: 40px;
+    opacity: 0;
+  }
+
+  80% {
+    bottom: 40px;
+    opacity: 0;
+  }
+
+  100% {
+    bottom: 24px;
+    opacity: 1;
+  }
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(6);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

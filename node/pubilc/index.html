@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>本地 AI Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        #chat {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #messages {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .user {
+            text-align: right;
+            background: #e1f5fe;
+        }
+
+        .bot {
+            text-align: left;
+            background: #e8f5e9;
+        }
+
+        #input {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        #input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #input button {
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat">
+        <ul id="messages"></ul>
+        <div id="input">
+            <input type="text" id="message" placeholder="输入消息..." />
+            <button id="send">发送</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('send').addEventListener('click', () => {
+            const messageInput = document.getElementById('message');
+            const messageText = messageInput.value.trim();
+            if (messageText) {
+                addMessage('user', messageText);
+                sendMessage(messageText);
+                messageInput.value = '';
+            }
+        });
+
+        function addMessage(type, text) {
+            const messageList = document.getElementById('messages');
+            const messageItem = document.createElement('li');
+            messageItem.classList.add('message', type);
+            messageItem.textContent = text;
+            messageList.appendChild(messageItem);
+            messageList.scrollTop = messageList.scrollHeight; // 自动滚动到最新消息
+        }
+
+        function sendMessage(message) {
+            fetch('/message', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    addMessage('bot', data.reply);
+                })
+                .catch(error => {
+                    console.error('错误:', error);
+                    addMessage('bot', '对不起，出现了一个错误。');
+                });
+        }
+    </script>
+</body>
+
+</html>
